@@ -21,6 +21,8 @@ import { INCOTERM_INFO, CURRENCIES } from '@/types/simulation';
 import { COUNTRIES } from '@/lib/countries';
 import { formatCurrency, getTotalByIncoterm } from '@/lib/calculator';
 import { generateSimulationPDF } from '@/lib/pdfExport';
+import { SaveSimulationDialog } from './SaveSimulationDialog';
+import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 
 interface ResultsViewProps {
@@ -136,6 +138,7 @@ function LevelCard({ level, title, subtitle, total, currency, items, isActive, c
 
 export function ResultsView({ product, params, breakdown, onBack, onReset }: ResultsViewProps) {
   const [isExporting, setIsExporting] = useState(false);
+  const { user } = useAuth();
   const origin = COUNTRIES.find(c => c.code === params.originCountry);
   const dest = COUNTRIES.find(c => c.code === params.destinationCountry);
   const finalTotal = getTotalByIncoterm(breakdown, params.incoterm);
@@ -284,6 +287,13 @@ export function ResultsView({ product, params, breakdown, onBack, onReset }: Res
           <RefreshCcw className="w-4 h-4 mr-2" />
           Nouvelle simulation
         </Button>
+        {user && (
+          <SaveSimulationDialog 
+            product={product} 
+            params={params} 
+            breakdown={breakdown}
+          />
+        )}
         <Button variant="hero" className="flex-1" onClick={handleExportPDF} disabled={isExporting}>
           {isExporting ? (
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />

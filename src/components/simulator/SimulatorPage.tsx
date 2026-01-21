@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LogIn, LogOut, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { StepIndicator } from './StepIndicator';
 import { ProductForm } from './ProductForm';
 import { ExportParamsForm } from './ExportParamsForm';
 import { ResultsView } from './ResultsView';
+import { SimulationHistory } from './SimulationHistory';
+import { useAuth } from '@/hooks/useAuth';
 import type { Product, ExportParams, CostBreakdown } from '@/types/simulation';
 import { calculateExportCost } from '@/lib/calculator';
 
@@ -32,6 +37,8 @@ export function SimulatorPage() {
   const [product, setProduct] = useState<Product>(initialProduct);
   const [params, setParams] = useState<ExportParams>(initialParams);
   const [breakdown, setBreakdown] = useState<CostBreakdown | null>(null);
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
 
   const handleCalculate = () => {
     const result = calculateExportCost(product, params);
@@ -44,6 +51,17 @@ export function SimulatorPage() {
     setParams(initialParams);
     setBreakdown(null);
     setStep(0);
+  };
+
+  const handleLoadSimulation = (
+    loadedProduct: Product, 
+    loadedParams: ExportParams, 
+    loadedBreakdown: CostBreakdown
+  ) => {
+    setProduct(loadedProduct);
+    setParams(loadedParams);
+    setBreakdown(loadedBreakdown);
+    setStep(2);
   };
 
   return (
@@ -61,39 +79,78 @@ export function SimulatorPage() {
                 <p className="text-xs text-muted-foreground">Simulateur de coûts export</p>
               </div>
             </div>
+            
+            {/* Auth buttons */}
+            <div className="flex items-center gap-2">
+              {loading ? null : user ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground hidden sm:inline">
+                    {user.email}
+                  </span>
+                  <Button variant="ghost" size="sm" onClick={() => signOut()}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Déconnexion
+                  </Button>
+                </div>
+              ) : (
+                <Button variant="outline" size="sm" onClick={() => navigate('/auth')}>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Connexion
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
-        <StepIndicator currentStep={step} totalSteps={3} />
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid lg:grid-cols-[1fr,320px] gap-8 max-w-5xl mx-auto">
+          {/* Main Form Area */}
+          <div className="max-w-2xl">
+            <StepIndicator currentStep={step} totalSteps={3} />
 
-        {step === 0 && (
-          <ProductForm
-            product={product}
-            onChange={setProduct}
-            onNext={() => setStep(1)}
-          />
-        )}
+            {step === 0 && (
+              <ProductForm
+                product={product}
+                onChange={setProduct}
+                onNext={() => setStep(1)}
+              />
+            )}
 
-        {step === 1 && (
-          <ExportParamsForm
-            params={params}
-            onChange={setParams}
-            onNext={handleCalculate}
-            onBack={() => setStep(0)}
-          />
-        )}
+            {step === 1 && (
+              <ExportParamsForm
+                params={params}
+                onChange={setParams}
+                onNext={handleCalculate}
+                onBack={() => setStep(0)}
+              />
+            )}
 
-        {step === 2 && breakdown && (
-          <ResultsView
-            product={product}
-            params={params}
-            breakdown={breakdown}
-            onBack={() => setStep(1)}
-            onReset={handleReset}
-          />
+            {step === 2 && breakdown && (
+              <ResultsView
+                product={product}
+                params={params}
+                breakdown={breakdown}
+                onBack={() => setStep(1)}
+                onReset={handleReset}
+              />
+            )}
+          </div>
+
+          {/* Sidebar - History */}
+          {user && (
+            <div className="hidden lg:block">
+              <SimulationHistory onLoad={handleLoadSimulation} />
+            </div>
+          )}
+        </div>
+
+        {/* Mobile History */}
+        {user && step === 0 && (
+          <div className="lg:hidden mt-8 max-w-2xl mx-auto">
+            <SimulationHistory onLoad={handleLoadSimulation} />
+          </div>
         )}
       </main>
 
