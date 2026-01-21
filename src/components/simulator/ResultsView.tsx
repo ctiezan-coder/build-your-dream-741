@@ -10,7 +10,8 @@ import {
   TrendingUp,
   ChevronDown,
   ChevronUp,
-  Info
+  Info,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +20,7 @@ import type { Product, ExportParams, CostBreakdown, Incoterm } from '@/types/sim
 import { INCOTERM_INFO, CURRENCIES } from '@/types/simulation';
 import { COUNTRIES } from '@/lib/countries';
 import { formatCurrency, getTotalByIncoterm } from '@/lib/calculator';
+import { generateSimulationPDF } from '@/lib/pdfExport';
 import { cn } from '@/lib/utils';
 
 interface ResultsViewProps {
@@ -133,10 +135,24 @@ function LevelCard({ level, title, subtitle, total, currency, items, isActive, c
 }
 
 export function ResultsView({ product, params, breakdown, onBack, onReset }: ResultsViewProps) {
+  const [isExporting, setIsExporting] = useState(false);
   const origin = COUNTRIES.find(c => c.code === params.originCountry);
   const dest = COUNTRIES.find(c => c.code === params.destinationCountry);
   const finalTotal = getTotalByIncoterm(breakdown, params.incoterm);
   const incotermLevel = INCOTERM_INFO[params.incoterm].level;
+
+  const handleExportPDF = async () => {
+    setIsExporting(true);
+    try {
+      // Small delay for UX feedback
+      await new Promise(resolve => setTimeout(resolve, 300));
+      generateSimulationPDF({ product, params, breakdown });
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const levels: LevelCardProps[] = [
     {
@@ -268,9 +284,13 @@ export function ResultsView({ product, params, breakdown, onBack, onReset }: Res
           <RefreshCcw className="w-4 h-4 mr-2" />
           Nouvelle simulation
         </Button>
-        <Button variant="hero" className="flex-1">
-          <Download className="w-4 h-4 mr-2" />
-          Exporter PDF
+        <Button variant="hero" className="flex-1" onClick={handleExportPDF} disabled={isExporting}>
+          {isExporting ? (
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+          ) : (
+            <Download className="w-4 h-4 mr-2" />
+          )}
+          {isExporting ? 'Génération...' : 'Exporter PDF'}
         </Button>
       </div>
     </div>
