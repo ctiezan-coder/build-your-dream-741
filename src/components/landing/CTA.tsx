@@ -1,11 +1,8 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Sparkles, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-interface CTAProps {
-  onStartSimulation: () => void;
-}
-
-export function CTA({ onStartSimulation }: CTAProps) {
+export function CTA() {
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Background */}
@@ -31,15 +28,30 @@ export function CTA({ onStartSimulation }: CTAProps) {
           maîtrisez vos prix d'exportation.
         </p>
         
-        <Button 
-          onClick={onStartSimulation}
-          variant="glass"
-          size="xl"
-          className="group"
-        >
-          Commencer maintenant
-          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button 
+            asChild
+            variant="glass"
+            size="xl"
+            className="group"
+          >
+            <Link to="/simulator">
+              Commencer maintenant
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+          <Button 
+            asChild
+            variant="outline"
+            size="xl"
+            className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20"
+          >
+            <Link to="/incoterms">
+              <BookOpen className="w-5 h-5 mr-2" />
+              Guide Incoterms
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );
