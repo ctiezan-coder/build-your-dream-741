@@ -1,16 +1,13 @@
+import { Link } from 'react-router-dom';
 import { ArrowRight, Globe, Calculator, TrendingUp, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-interface HeroProps {
-  onStartSimulation: () => void;
-}
-
-export function Hero({ onStartSimulation }: HeroProps) {
+export function Hero() {
   const features = [
-    { icon: Calculator, text: 'Calcul instantané EXW → DDP' },
-    { icon: Globe, text: '30+ pays et devises' },
-    { icon: TrendingUp, text: 'Taux de change en temps réel' },
-    { icon: Shield, text: 'Droits de douane intégrés' },
+    { icon: Calculator, text: 'Calcul instantané EXW → DDP', link: '/incoterms' },
+    { icon: Globe, text: '30+ pays et devises', link: '/simulator' },
+    { icon: TrendingUp, text: 'Taux de change en temps réel', link: '/simulator' },
+    { icon: Shield, text: 'Droits de douane intégrés', link: '/simulator' },
   ];
 
   return (
@@ -27,10 +24,14 @@ export function Hero({ onStartSimulation }: HeroProps) {
       <div className="relative container mx-auto px-4 py-24 md:py-32">
         <div className="max-w-3xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary-foreground/90 text-sm mb-8 backdrop-blur-sm border border-primary/30">
+          <Link 
+            to="/incoterms" 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary-foreground/90 text-sm mb-8 backdrop-blur-sm border border-primary/30 hover:bg-primary/30 transition-colors"
+          >
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
             Incoterms® 2026
-          </div>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
           
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
@@ -49,26 +50,39 @@ export function Hero({ onStartSimulation }: HeroProps) {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button 
-              onClick={onStartSimulation} 
+              asChild
               variant="glass" 
               size="xl"
               className="group"
             >
-              Démarrer une simulation
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Link to="/simulator">
+                Démarrer une simulation
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              variant="outline" 
+              size="xl"
+              className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20"
+            >
+              <Link to="/incoterms">
+                Guide Incoterms
+              </Link>
             </Button>
           </div>
           
           {/* Features Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {features.map((feature) => (
-              <div 
-                key={feature.text} 
-                className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10"
+              <Link 
+                key={feature.text}
+                to={feature.link}
+                className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 hover:bg-primary-foreground/10 transition-colors group"
               >
-                <feature.icon className="w-6 h-6 text-primary-foreground/80" />
+                <feature.icon className="w-6 h-6 text-primary-foreground/80 group-hover:scale-110 transition-transform" />
                 <span className="text-sm text-primary-foreground/70 text-center">{feature.text}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,4 +1,5 @@
-import { Package, Settings, BarChart3 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Package, Settings, BarChart3, ArrowRight } from 'lucide-react';
 
 const steps = [
   {
@@ -6,18 +7,24 @@ const steps = [
     icon: Package,
     title: 'Décrivez votre produit',
     description: 'Renseignez le code SH, le poids, le volume et la valeur de votre marchandise.',
+    link: '/simulator',
+    linkText: 'Commencer',
   },
   {
     step: 2,
     icon: Settings,
     title: 'Configurez votre export',
     description: 'Choisissez les pays, l\'Incoterm, le mode de transport et la quantité.',
+    link: '/incoterms',
+    linkText: 'Guide Incoterms',
   },
   {
     step: 3,
     icon: BarChart3,
     title: 'Obtenez vos coûts',
     description: 'Visualisez la décomposition complète et exportez votre devis professionnel.',
+    link: '/simulator',
+    linkText: 'Lancer une simulation',
   },
 ];
 
@@ -41,9 +48,13 @@ export function HowItWorks() {
             
             <div className="space-y-8">
               {steps.map((step, index) => (
-                <div key={step.step} className="relative flex gap-6 items-start">
+                <Link 
+                  key={step.step} 
+                  to={step.link}
+                  className="relative flex gap-6 items-start group cursor-pointer"
+                >
                   {/* Step number */}
-                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg shrink-0">
+                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform">
                     <span className="text-2xl font-bold text-primary-foreground">{step.step}</span>
                   </div>
                   
@@ -51,11 +62,15 @@ export function HowItWorks() {
                   <div className="flex-1 pb-8">
                     <div className="flex items-center gap-3 mb-2">
                       <step.icon className="w-5 h-5 text-primary" />
-                      <h3 className="font-semibold text-xl">{step.title}</h3>
+                      <h3 className="font-semibold text-xl group-hover:text-primary transition-colors">{step.title}</h3>
                     </div>
-                    <p className="text-muted-foreground">{step.description}</p>
+                    <p className="text-muted-foreground mb-3">{step.description}</p>
+                    <span className="inline-flex items-center gap-1 text-sm text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      {step.linkText}
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

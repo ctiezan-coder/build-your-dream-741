@@ -5,18 +5,14 @@ import { TargetAudience } from './TargetAudience';
 import { CTA } from './CTA';
 import { Footer } from './Footer';
 
-interface LandingPageProps {
-  onStartSimulation: () => void;
-}
-
-export function LandingPage({ onStartSimulation }: LandingPageProps) {
+export function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Hero onStartSimulation={onStartSimulation} />
+      <Hero />
       <Features />
       <HowItWorks />
       <TargetAudience />
-      <CTA onStartSimulation={onStartSimulation} />
+      <CTA />
       <Footer />
     </div>
   );
