@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LogIn, LogOut, User } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { LogIn, LogOut, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StepIndicator } from './StepIndicator';
 import { ProductForm } from './ProductForm';
@@ -80,22 +80,29 @@ export function SimulatorPage() {
               </div>
             </div>
             
-            {/* Auth buttons */}
+            {/* Nav links & Auth */}
             <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" asChild className="hidden sm:flex">
+                <Link to="/incoterms">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Guide Incoterms
+                </Link>
+              </Button>
+              
               {loading ? null : user ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground hidden sm:inline">
+                  <span className="text-sm text-muted-foreground hidden md:inline">
                     {user.email}
                   </span>
                   <Button variant="ghost" size="sm" onClick={() => signOut()}>
                     <LogOut className="w-4 h-4 mr-2" />
-                    Déconnexion
+                    <span className="hidden sm:inline">Déconnexion</span>
                   </Button>
                 </div>
               ) : (
                 <Button variant="outline" size="sm" onClick={() => navigate('/auth')}>
                   <LogIn className="w-4 h-4 mr-2" />
-                  Connexion
+                  <span className="hidden sm:inline">Connexion</span>
                 </Button>
               )}
             </div>
