@@ -18,7 +18,7 @@ export function Footer() {
             </div>
             <p className="text-muted-foreground text-sm max-w-sm">
               Plateforme de simulation des coûts à l'exportation basée sur les 
-              Incoterms® 2020 pour les entreprises du commerce international.
+              Incoterms® 2026 pour les entreprises du commerce international.
             </p>
           </div>
           
@@ -29,7 +29,7 @@ export function Footer() {
               <li>
                 <a href="#" className="hover:text-primary transition-colors flex items-center gap-2">
                   <FileText className="w-4 h-4" />
-                  Guide Incoterms 2020
+                  Guide Incoterms 2026
                 </a>
               </li>
               <li>

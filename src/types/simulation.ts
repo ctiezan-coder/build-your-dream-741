@@ -2,7 +2,7 @@
 
 export type TransportMode = 'maritime' | 'aerien' | 'routier' | 'ferroviaire';
 
-export type Incoterm = 'EXW' | 'FCA' | 'FOB' | 'CFR' | 'CIF' | 'DAP' | 'DDP';
+export type Incoterm = 'EXW' | 'FCA' | 'FAS' | 'FOB' | 'CFR' | 'CIF' | 'CPT' | 'CIP' | 'DPU' | 'DAP' | 'DDP';
 
 export type Currency = 'EUR' | 'USD' | 'XOF' | 'GBP' | 'MAD' | 'TND';
 
@@ -79,7 +79,7 @@ export interface ExchangeRate {
   updatedAt: Date;
 }
 
-// Incoterm descriptions
+// Incoterm descriptions - Incoterms® 2026
 export const INCOTERM_INFO: Record<Incoterm, { name: string; description: string; level: number }> = {
   EXW: {
     name: 'Ex-Works',
@@ -89,6 +89,11 @@ export const INCOTERM_INFO: Record<Incoterm, { name: string; description: string
   FCA: {
     name: 'Free Carrier',
     description: 'Franco transporteur - Livraison au transporteur désigné par l\'acheteur',
+    level: 2,
+  },
+  FAS: {
+    name: 'Free Alongside Ship',
+    description: 'Franco le long du navire - Marchandise placée le long du navire au port d\'embarquement',
     level: 2,
   },
   FOB: {
@@ -106,9 +111,24 @@ export const INCOTERM_INFO: Record<Incoterm, { name: string; description: string
     description: 'Coût, assurance et fret inclus jusqu\'au port de destination',
     level: 3,
   },
+  CPT: {
+    name: 'Carriage Paid To',
+    description: 'Port payé jusqu\'à - Fret payé jusqu\'au lieu de destination convenu',
+    level: 3,
+  },
+  CIP: {
+    name: 'Carriage and Insurance Paid To',
+    description: 'Port payé, assurance comprise - Fret et assurance payés jusqu\'au lieu convenu',
+    level: 3,
+  },
+  DPU: {
+    name: 'Delivered at Place Unloaded',
+    description: 'Rendu au lieu de destination déchargé - Marchandise déchargée à destination',
+    level: 4,
+  },
   DAP: {
     name: 'Delivered at Place',
-    description: 'Rendu au lieu de destination - Sans dédouanement import',
+    description: 'Rendu au lieu de destination - L\'acheteur paie les droits de douane et la détaxe à l\'arrivée',
     level: 4,
   },
   DDP: {
