@@ -34,7 +34,7 @@ export function TargetAudience() {
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Que vous soyez une PME, un transitaire ou un consultant, 
-            SimulExport simplifie vos calculs export.
+            ACIEXSimul simplifie vos calculs export.
           </p>
         </div>
 

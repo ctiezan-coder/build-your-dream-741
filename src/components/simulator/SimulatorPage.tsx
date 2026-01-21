@@ -57,7 +57,7 @@ export function SimulatorPage() {
                 <span className="text-xl">📦</span>
               </div>
               <div>
-                <h1 className="font-bold text-lg">SimulExport</h1>
+                <h1 className="font-bold text-lg">ACIEXSimul</h1>
                 <p className="text-xs text-muted-foreground">Simulateur de coûts export</p>
               </div>
             </div>
@@ -100,7 +100,7 @@ export function SimulatorPage() {
       {/* Footer */}
       <footer className="border-t mt-auto py-6">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>SimulExport — Plateforme de simulation des coûts à l'exportation</p>
+          <p>ACIEXSimul — Plateforme de simulation des coûts à l'exportation</p>
           <p className="mt-1">Basé sur les Incoterms® 2020</p>
         </div>
       </footer>
