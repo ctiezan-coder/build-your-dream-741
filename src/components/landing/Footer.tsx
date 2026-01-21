@@ -12,7 +12,7 @@ export function Footer() {
                 <span className="text-xl">📦</span>
               </div>
               <div>
-                <h3 className="font-bold text-lg">SimulExport</h3>
+                <h3 className="font-bold text-lg">ACIEXSimul</h3>
                 <p className="text-xs text-muted-foreground">Simulateur de coûts export</p>
               </div>
             </div>
@@ -46,9 +46,9 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="mailto:contact@simulexport.com" className="hover:text-primary transition-colors flex items-center gap-2">
+                <a href="mailto:contact@aciexsimul.com" className="hover:text-primary transition-colors flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  contact@simulexport.com
+                  contact@aciexsimul.com
                 </a>
               </li>
             </ul>
@@ -56,7 +56,7 @@ export function Footer() {
         </div>
         
         <div className="border-t mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>© 2026 SimulExport. Tous droits réservés.</p>
+          <p>© 2026 ACIEXSimul. Tous droits réservés.</p>
           <p>Incoterms® est une marque déposée de ICC</p>
         </div>
       </div>
