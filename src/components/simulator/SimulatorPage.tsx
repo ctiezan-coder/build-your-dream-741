@@ -101,7 +101,7 @@ export function SimulatorPage() {
       <footer className="border-t mt-auto py-6">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>ACIEXSimul — Plateforme de simulation des coûts à l'exportation</p>
-          <p className="mt-1">Basé sur les Incoterms® 2020</p>
+          <p className="mt-1">Basé sur les Incoterms® 2026</p>
         </div>
       </footer>
     </div>

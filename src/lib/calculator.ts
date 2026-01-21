@@ -227,11 +227,15 @@ export function getTotalByIncoterm(breakdown: CostBreakdown, incoterm: Incoterm)
     case 'EXW':
       return breakdown.exwTotal;
     case 'FCA':
+    case 'FAS':
     case 'FOB':
       return breakdown.fobTotal;
     case 'CFR':
     case 'CIF':
+    case 'CPT':
+    case 'CIP':
       return breakdown.cifTotal;
+    case 'DPU':
     case 'DAP':
     case 'DDP':
       return breakdown.ddpTotal;
