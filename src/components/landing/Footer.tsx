@@ -1,4 +1,5 @@
 import { Globe, Mail, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (
@@ -27,15 +28,20 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Ressources</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-primary transition-colors flex items-center gap-2">
+                <Link to="/incoterms" className="hover:text-primary transition-colors flex items-center gap-2">
                   <FileText className="w-4 h-4" />
                   Guide Incoterms 2026
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors flex items-center gap-2">
+                <a 
+                  href="/docs/tableau_concordance.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors flex items-center gap-2"
+                >
                   <Globe className="w-4 h-4" />
-                  Codes SH
+                  Codes SH (TEC CEDEAO)
                 </a>
               </li>
             </ul>
