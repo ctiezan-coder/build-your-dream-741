@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Package, Weight, Box, DollarSign, Search, Info } from 'lucide-react';
+import { Package, Weight, Box, DollarSign, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { HSCodeSearch } from './HSCodeSearch';
 import type { Product, Currency } from '@/types/simulation';
 import { CURRENCIES } from '@/types/simulation';
 import { calculateChargeableWeight } from '@/lib/calculator';
@@ -104,22 +105,16 @@ export function ProductForm({ product, onChange, onNext }: ProductFormProps) {
                 <Info className="w-4 h-4 text-muted-foreground cursor-help" />
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
-                <p>Le code du Système Harmonisé (6-10 chiffres) détermine les droits de douane applicables.</p>
+                <p>Le code du Système Harmonisé (6-10 chiffres) détermine les droits de douane applicables. Tapez pour rechercher dans la base TEC CEDEAO.</p>
               </TooltipContent>
             </Tooltip>
             <span className="text-destructive">*</span>
           </Label>
-          <div className="relative">
-            <Input
-              id="hsCode"
-              placeholder="Ex: 1511100000"
-              value={product.hsCode}
-              onChange={(e) => updateField('hsCode', e.target.value.replace(/\D/g, '').slice(0, 10))}
-              className={errors.hsCode ? 'border-destructive pr-10' : 'pr-10'}
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          </div>
-          {errors.hsCode && <p className="text-xs text-destructive">{errors.hsCode}</p>}
+          <HSCodeSearch
+            value={product.hsCode}
+            onChange={(code) => updateField('hsCode', code)}
+            error={errors.hsCode}
+          />
         </div>
 
         {/* Weight Fields */}
